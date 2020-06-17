@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: netshoes/cep
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+server:
+  port: 8090
+  servlet:
+    context-path: /${spring.application.name}
+
+swagger:
+  api:
+    title: Busca de CEP
+    description: API para busca de CEP
+    termsOfServiceUrl: www.netshoes.com.br
+    version: @project.version@
+    controller:
+      basepackage: br.com.netshoes.cep
+    contact:
+      email: ivo@gmail.com
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+services:
+  cep:
+    url: viacep.com.br/ws/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude: beans,env
+
