@@ -22,7 +22,7 @@ public class CepServiceImpl implements CepService {
         this.cepClient = cepClient;
     }
 
-    private AddressDataDTO getAddressByCep(String cep) {
+    private AddressDataDTO getAddressByCep(final String cep) {
         try {
             return cepClient.find(cep);
         } catch(HttpStatusCodeException hce){
@@ -44,11 +44,11 @@ public class CepServiceImpl implements CepService {
         return result;
     }
 
-    private void ThrowException(HttpStatus httpStatus, String message) {
+    private void ThrowException(final HttpStatus httpStatus, final String message) {
         throw new ResponseStatusException(httpStatus, message);
     }
 
-    private void validationCep(CepRequestDTO request){
+    private void validationCep(final CepRequestDTO request){
         if(!isNumeric(request.getCep())) {
             ThrowException(HttpStatus.BAD_REQUEST, ZIP_POSTAL_CODE_INVALID);
         }
@@ -68,8 +68,12 @@ public class CepServiceImpl implements CepService {
         var cepAlter = cep;
         cepAlter = replaceStringByPosition(cepAlter, '0', indexString);
         final var result = getAddressByCep(cepAlter);
-        if(!result.isEmpty()) { return result; }
-        if(indexString >= 1) { return retrieveFindAddressByCep(cepAlter, indexString - 1); }
+        if(!result.isEmpty()) {
+            return result;
+        }
+        if(indexString >= 1) {
+            return retrieveFindAddressByCep(cepAlter, indexString - 1);
+        }
         //Após as tentativas de busca, se mesmo assim nao houver resultado, lanca-se a excecao abaixo
         ThrowException(HttpStatus.NOT_FOUND, ZIP_POSTAL_CODE_NOT_FOUND);
         return new AddressDataDTO();
