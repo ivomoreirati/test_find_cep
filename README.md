@@ -1,4 +1,4 @@
-# Projeto Busca de CEP - Test Netshoes
+# Projeto Busca de CEP
 
 A aplicação basicamente expôe um endpoint "/v1/address" para busca de endereço através do CEP.
 Obs: Para facilitar a interação com o contrato, disponibilizei via swagger no endereço:
